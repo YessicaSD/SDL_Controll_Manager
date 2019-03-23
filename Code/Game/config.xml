@@ -1,0 +1,39 @@
+<!-- Config file for the game -->
+
+<config>
+  <app>
+    <title>Game Development Testbed</title>
+    <organization>UPC</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="true"/>
+    
+  </renderer>
+
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+  <entitiesManager>
+    <Entities_Textures>
+      <Tex name="Allied_Unit" path="textures/AlliedInfant_IG.png"/>
+    </Entities_Textures>
+    <Animations>
+      <Allied_Unit>
+          <frame x="996" y="286" w="32" h="54"/>
+      </Allied_Unit>
+    </Animations>
+  </entitiesManager>
+</config>
