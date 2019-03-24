@@ -143,6 +143,10 @@ bool j1Input::PreUpdate(float dt)
 							{
 								LOG("SDL_HAPTIC ERROR: %s", SDL_GetError());
 							}
+							else
+							{
+								SDL_HapticRumbleInit(controller->haptic);
+							}
 							controllers.push_back(controller);
 						}
 					}

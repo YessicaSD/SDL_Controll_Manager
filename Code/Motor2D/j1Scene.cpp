@@ -11,6 +11,7 @@
 #include "j1Scene.h"
 #include "j1EntityManager.h"
 #include "p2Point.h"
+#include "SDL\include\SDL_haptic.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -97,7 +98,7 @@ bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 	App->render->DrawQuad(cube, 255, 0, 0, 255);
-	/*if((*App->input->controllers.begin())->Get_Axis(SDL_CONTROLLER_AXIS_LEFTX) < -10000)
+	if((*App->input->controllers.begin())->Get_Axis(SDL_CONTROLLER_AXIS_LEFTX) < -10000)
 		cube.x -= 1;
 	if ((*App->input->controllers.begin())->Get_Axis(SDL_CONTROLLER_AXIS_LEFTX) > 10000)
 		cube.x += 1;
@@ -108,9 +109,10 @@ bool j1Scene::PostUpdate(float dt)
 		cube.y += 1;
 	if ((*App->input->controllers.begin())->Get_Axis(SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 10000)
 	{
-		(*App->input->controllers.begin())->test_haptic();
-	
-	}*/
+		
+	//(*App->input->controllers.begin())->test_haptic();
+		SDL_HapticRumblePlay((*App->input->controllers.begin())->haptic, 0.5, 2000);
+	}
 
 	return ret;
 }

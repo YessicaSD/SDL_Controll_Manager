@@ -72,7 +72,7 @@ public:
 		effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
 		effect.periodic.direction.dir[0] = 18000; // Force comes from south
 		effect.periodic.period = 1000; // 1000 ms
-		effect.periodic.magnitude = 20000; // 20000/32767 strength
+		effect.periodic.magnitude = 32767; // 20000/32767 strength
 		effect.periodic.length = 5000; // 5 seconds long
 		effect.periodic.attack_length = 1000; // Takes 1 second to get max strength
 		effect.periodic.fade_length = 1000; // Takes 1 second to fade away
@@ -88,7 +88,7 @@ public:
 		SDL_HapticDestroyEffect(haptic, effect_id);
 
 		// Close the device
-		SDL_HapticClose(haptic);
+		//SDL_HapticClose(haptic);
 
 		return 0; // Success
 	}
