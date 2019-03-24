@@ -110,8 +110,8 @@ bool j1Scene::PostUpdate(float dt)
 	if ((*App->input->controllers.begin())->Get_Axis(SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 10000)
 	{
 		
-	//(*App->input->controllers.begin())->test_haptic();
-		SDL_HapticRumblePlay((*App->input->controllers.begin())->haptic, 0.5, 2000);
+	(*App->input->controllers.begin())->test_haptic();
+		//SDL_HapticRumblePlay((*App->input->controllers.begin())->haptic, 0.1, 10000);
 	}
 
 	return ret;

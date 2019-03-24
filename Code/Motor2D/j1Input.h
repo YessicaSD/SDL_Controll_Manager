@@ -5,9 +5,11 @@
 
 #include "SDL\include\SDL_gamecontroller.h"
 #include "SDL\include\SDL_haptic.h"
+
 #include "SDL\include\SDL.h"
 #include "j1Module.h"
 #include "p2Point.h"
+#include "p2Log.h"
 
 
 //#define NUM_KEYS 352
@@ -55,21 +57,49 @@ public:
 	{
 		return SDL_GameControllerGetAxis(ctr_pointer, axis);
 	}
+
+	int Create_haptic_effect(SDL_HapticEffect effect)
+	{
+		if ((SDL_HapticQuery(haptic)) == 0) {
+			SDL_HapticClose(haptic); // No sine effect
+			return -1;
+		}
+
+		return SDL_HapticNewEffect(haptic, &effect);
+	}
+
+	// type -> choose between this ones: https://wiki.libsdl.org/SDL_HapticPeriodic#type (SDL_HAPTIC_SINE...)
+	// direction_type-> choose between this ones: https://wiki.libsdl.org/SDL_HapticDirection#type (SDL_HAPTIC_POLAR...)
+	// dir -> depens on direction_type so also see descriptions of each:  https://wiki.libsdl.org/SDL_HapticDirection#type
+	// length-> duration of the effect
+
+	/*int Create_haptic_effect(Uint16 type, Uint8 direction_type, Sint32 dir[3], Uint16 period, Uint32 length,)
+	{
+		SDL_HapticEffect effect;
+
+
+	}*/
+	
 	int test_haptic() {
 
 		SDL_HapticEffect effect;
 		int effect_id;
 
+		if (haptic == NULL)
+		{
+			return -1;
+		}
 		// See if it can do sine waves
-		if ((SDL_HapticQuery(haptic) /*& SDL_HAPTIC_SINE*/) == 0) {
+		if ((SDL_HapticQuery(haptic) ) == 0) {
+			LOG("%s", SDL_GetError());
 			SDL_HapticClose(haptic); // No sine effect
 			return -1;
 		}
 
 		// Create the effect
 		SDL_memset(&effect, 0, sizeof(SDL_HapticEffect)); // 0 is safe default
-		effect.type = SDL_HAPTIC_SINE;
-		effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
+		//effect.type = SDL_HAPTIC_SINE;
+		effect.periodic.direction.type = SDL_HAPTIC_CUSTOM; // Polar coordinates
 		effect.periodic.direction.dir[0] = 18000; // Force comes from south
 		effect.periodic.period = 1000; // 1000 ms
 		effect.periodic.magnitude = 32767; // 20000/32767 strength
@@ -77,6 +107,7 @@ public:
 		effect.periodic.attack_length = 1000; // Takes 1 second to get max strength
 		effect.periodic.fade_length = 1000; // Takes 1 second to fade away
 
+		int ret = SDL_HapticEffectSupported(haptic, &effect);
 		// Upload the effect
 		effect_id = SDL_HapticNewEffect(haptic, &effect);
 

@@ -53,6 +53,7 @@ bool j1Input::Start()
 		return ret = false;
 	}
 	SDL_Init(SDL_INIT_HAPTIC);
+	
 	return true;
 }
 
@@ -160,7 +161,11 @@ bool j1Input::PreUpdate(float dt)
 				{
 					if (SDL_GameControllerGetAttached((*iter)->ctr_pointer) == false)
 					{
-						SDL_HapticClose((*iter)->haptic);
+						if ((*iter)->haptic != NULL)
+						{
+							SDL_HapticClose((*iter)->haptic);
+						}
+						
 						SDL_GameControllerClose((*iter)->ctr_pointer);
 						delete (*iter);
 						iter = controllers.erase(iter);
